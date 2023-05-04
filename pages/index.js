@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
+
+
 import styles from '../styles/home.module.css'
 function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -33,11 +35,78 @@ function Sidebar() {
 
   )
 }
+function Card({ imageSrc, title }) {
+  return (
+    <div className={styles.Object_Suggestion_Card}>
+      <img src={imageSrc} alt={title} className={styles.Card_image_holder} />
+      <div className={styles.content}>
+        <span className={styles.Card_title}>{title}</span>
+      </div>
+    </div>
+  );
+}
+function Suggestion_Options(){
+  
+}
+function Mainpanel() {
+  return(
+    <div className={styles.main_panel}>
+      <div className={styles.main_panel_head}>
+        <div className={styles.main_panel_head_pane}>
+          <div className={styles.searchPane}>
+            <input  className={styles.main_panel_head_pane_input} type="text" placeholder="Search The Files" />
+            <svg className={styles.main_panel_head_icon_search_m} width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M42 6C23.2031 6 8 21.2031 8 40C8 58.7969 23.2031 74 42 74C48.7109 74 54.9219 72.0312 60.1875 68.6875L84.75 93.25L93.25 84.75L69 60.5625C73.3594 54.8438 76 47.7578 76 40C76 21.2031 60.7969 6 42 6ZM42 14C56.3984 14 68 25.6016 68 40C68 54.3984 56.3984 66 42 66C27.6016 66 16 54.3984 16 40C16 25.6016 27.6016 14 42 14Z" fill="black"/>
+            </svg>
+          </div>
+
+        </div>
+        <div className={styles.main_panel_head_workpane}>
+          <SuggestionPanel/>
+        </div>
+      </div>
+    </div>
+)}
+function SuggestionPanel(){
+  return(
+    <div className={styles.suggestion_panel}>
+      <div className={styles.suggestion_panel_head}>
+        <span className={styles.Suggestion_Menu_wordhead}>
+          Suggestions
+        </span>
+
+      </div>
+      <div className={styles.suggestion_card_holder}>
+        <Card imageSrc='https://storage.googleapis.com/boom-ai-images/results/HwyZTbaSpH6Pzgs2CfbF/00002.jpg' title="Example Card"/>
+        <Card 
+        imageSrc='https://storage.googleapis.com/boom-ai-images/results/mXzHQoClC7ZepJJRJ61g/00008.jpg' 
+        title="Example Card"/>
+        <Card 
+        imageSrc='https://storage.googleapis.com/boom-ai-images/results/lx8YCLmvrioCfryxYYag/00008.jpg' 
+        title="Example Card"/>
+        <Card 
+        imageSrc='https://storage.googleapis.com/boom-ai-images/results/HwyZTbaSpH6Pzgs2CfbF/00002.jpg' 
+        title="Example Card"/>
+        <Card 
+        imageSrc='https://storage.googleapis.com/boom-ai-images/results/HwyZTbaSpH6Pzgs2CfbF/00002.jpg' 
+        title="Example Card"/>
+        <Card 
+        imageSrc='https://storage.googleapis.com/boom-ai-images/results/HwyZTbaSpH6Pzgs2CfbF/00002.jpg' 
+        title="Example Card"/>
+      </div>
+    </div>
+  )
+}
 function Home() {
 
   return (
     <main className={styles.main}>
         <Sidebar />
+
+        <Mainpanel>
+          
+        </Mainpanel>
+
     </main>
   )
 }
