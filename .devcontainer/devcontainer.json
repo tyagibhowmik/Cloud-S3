@@ -1,7 +1,7 @@
 {
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "hostRequirements": {
-    "cpus": 2
+    "cpus": 16
   },
   "waitFor": "onCreateCommand",
   "updateContentCommand": "npm install && npm run build",
