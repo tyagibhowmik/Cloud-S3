@@ -244,7 +244,7 @@ const upload = multer({
       id: 'original',
       key: function (req, file, cb) {
         const ext = file.originalname.split('.').pop();
-        cb(null, `${CryptoJS.SHA256(Date.now()+'-'+ file.originalname).toString()}-${file.originalname}`);
+        cb(null, `${CryptoJS.SHA256(Date.now()+'-'+ file.originalname).toString()}.${ext}`);
       },
       transform: function (req, file, cb) {
         cb(null, sharp().resize(800, 800));
