@@ -232,7 +232,7 @@ const upload = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
       const ext = file.originalname.split('.').pop();
-      cb(null, `${CryptoJS.SHA256(Date.now()+'-'+ file.originalname).toString()}-${file.originalname}.${ext}`);
+      cb(null, `${CryptoJS.SHA256(Date.now()+'-'+ file.originalname).toString()}-${file.originalname}`);
     },
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
