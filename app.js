@@ -50,7 +50,6 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <div class="wrapper">
-          <header>File Uploader JavaScript</header>
           <form  action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
             <input class="file-input" type="file" name="file" hidden>
             <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
