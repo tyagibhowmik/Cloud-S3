@@ -1,20 +1,20 @@
 const express = require('express');
 const app = express();
 const CryptoJS = require('crypto-js');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client,ListBucketsCommand,PutObjectCommand,GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl }  = require("@aws-sdk/s3-request-presigner");
 // Set up AWS credentials
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const credentials = {
-  accessKeyId: '9bvznd1zdigsT5jF',
-  secretAccessKey: 'ODT8QVn4xNtvhjruEXqfwyLFnzrSozIfL5ieubsk'
+  accessKeyId: 'V8td0QqC4ul9XQGPNTZh',
+  secretAccessKey: 'tIATgra7BmH0EqwQfLzUagTqYyAAzVS7Esekr0fM'
 };
 
 // Create an S3 client instance
 const s3 = new S3Client({
-  endpoint: "https://s3.tebi.io",
-  region: "sgp",
+  endpoint: "https://w6s4.sg.idrivee2-50.com",
+  region: "singapore",
   credentials
 });
 // const upload = multer({
@@ -188,7 +188,29 @@ app.get('/', (req, res) => {
     </html>
   `);
 }); 
-  
+app.get('/api_getfile', async (req, res) => {
+  const credentials = {
+    accessKeyId: 'V8td0QqC4ul9XQGPNTZh',
+    secretAccessKey: 'tIATgra7BmH0EqwQfLzUagTqYyAAzVS7Esekr0fM'
+  };
+  // Create an S3 client instance
+  const s3Client = new S3Client({
+    endpoint: "https://w6s4.sg.idrivee2-50.com",
+    region: "singapore",
+    credentials
+  });
+  const key = req.query.key;
+  const command = new GetObjectCommand({
+    Bucket: "cloudstoragesgp1idrvep0clds3",
+    Key: key,
+    ResponseContentDisposition: 'inline; filename="ForBiggerJoyrides.mp4"'
+  });
+
+  const url = await getSignedUrl(s3Client, command, { expiresIn: 3600*24 });
+
+  res.send(url);
+});
+
 // Handle file uploads
 // Handle file uploads
 

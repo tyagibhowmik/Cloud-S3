@@ -2,13 +2,13 @@ const { S3Client, ListBucketsCommand,PutObjectCommand,GetObjectCommand } = requi
 const { getSignedUrl }  = require("@aws-sdk/s3-request-presigner");
 // Configure the SDK with your access key ID and secret access key
 const credentials = {
-    accessKeyId: "9bvznd1zdigsT5jF",
-    secretAccessKey: "ODT8QVn4xNtvhjruEXqfwyLFnzrSozIfL5ieubsk"
+    accessKeyId: "V8td0QqC4ul9XQGPNTZh",
+    secretAccessKey: "tIATgra7BmH0EqwQfLzUagTqYyAAzVS7Esekr0fM"
   }
 async function listBuckets() {
     const s3Client= new S3Client({
-        endpoint: "https://s3.tebi.io",
-        region: "global",
+        endpoint: "https://w6s4.sg.idrivee2-50.com",
+        region: "singapore",
         credentials
       });
 
@@ -21,7 +21,7 @@ async function listBuckets() {
 
 listBuckets();
 const s3Client= new S3Client({
-    endpoint: "https://s3.tebi.io",
+    endpoint: "https://w6s4.sg.idrivee2-50.com",
     region: "global",
     credentials
   });
@@ -36,22 +36,23 @@ async function upload_file(){
     );
 
 }
-upload_file()
-async function get_file_signed_URL(){ 
-    const s3Client= new S3Client({
-      endpoint: "https://s3.tebi.io",
-      region: "global",
-      credentials
-    });
-    const get_command = new GetObjectCommand({
-      Bucket: "cloud-eu1-storage-p0-clds3.playtunes.ml",
-      Key: "node-js.txt",
-      ResponseContentDisposition: 'attachment; filename="YOUR_FILENAME.txt"'
-    });
-    const url = await getSignedUrl(s3Client, get_command, { expiresIn: 3600 });
-    console.log(url);
-    };
-get_file_signed_URL();
-module.exports = {
-  get_file_signed_URL
-};
+//upload_file()
+async function getPresignedUrl() {
+  const s3Client = new S3Client({
+    endpoint: "https://w6s4.sg.idrivee2-50.com",
+    region: "global",
+    credentials
+  });
+
+  const command = new GetObjectCommand({
+    Bucket: "cloudstoragesgp1idrvep0clds3",
+    Key: "bunny.mp4",
+    ResponseContentDisposition: 'inline; filename="ForBiggerJoyrides.mp4"'
+  });
+
+  const url = await getSignedUrl(s3Client, command, { expiresIn: 3600*24 });
+
+  console.log("Presigned URL:", url);
+}
+
+getPresignedUrl();
