@@ -188,28 +188,88 @@ app.get('/', (req, res) => {
     </html>
   `);
 }); 
-app.get('/api_getfile', async (req, res) => {
+app.get('/online/d/:key', async (req, res) => {
+  const key = req.params.key;
+  res.send(`Your disk address is ${key}`)
+});
+app.get('/api/v1/getfile/:bucketId', async (req, res) => {
+  const bucketId = req.params.bucketId;
+  const key = req.query.key;
   const credentials = {
-    accessKeyId: 'V8td0QqC4ul9XQGPNTZh',
-    secretAccessKey: 'tIATgra7BmH0EqwQfLzUagTqYyAAzVS7Esekr0fM'
+    accessKeyId: 'KTcTQmJmJqIIDJh214y1',
+    secretAccessKey: 'NTmGYzSZ5oY2LEIjzqwwCCciFwvcb4mU4RzgMzS4'
   };
   // Create an S3 client instance
   const s3Client = new S3Client({
-    endpoint: "https://w6s4.sg.idrivee2-50.com",
-    region: "singapore",
+    endpoint: "https://m4i3.par.idrivee2-43.com",
+    region: "paris",
     credentials
   });
-  const key = req.query.key;
+
   const command = new GetObjectCommand({
-    Bucket: "cloudstoragesgp1idrvep0clds3",
+    Bucket: "clds3-pari-idrv-p0-hdd",
     Key: key,
-    ResponseContentDisposition: 'inline; filename="ForBiggerJoyrides.mp4"'
+    ACL: 'public-read',
+    ResponseContentDisposition: 'inline; filename="bigger.mp4"',
+    ContentLengthRange: {
+      min: 0,
+      max: 1024 * 1024 * 8000 // 100 MB
+    }
   });
 
   const url = await getSignedUrl(s3Client, command, { expiresIn: 3600*24 });
 
   res.send(url);
 });
+const videojs = require('video.js');
+
+app.get('/api/v1/videostream', async (req, res) => {
+  const key = req.query.key;
+  if (!key) {
+    res.status(400).send('Missing key parameter');
+    return;
+  }
+
+  const player = videojs('videoPlayer', {
+    controls: true,
+    autoplay: false,
+    preload: 'auto',
+    sources: [{
+      src: key,
+      type: 'video/mp4'
+    }]
+  });
+
+  const html = `
+
+  `;
+
+  res.send(html);
+});
+
+// app.get('api/v1/getfile/:bcktid', async (req, res) => {
+//   bucket_id = req.params.bcktid;
+//   const credentials = {
+//     accessKeyId: 'V8td0QqC4ul9XQGPNTZh',
+//     secretAccessKey: 'tIATgra7BmH0EqwQfLzUagTqYyAAzVS7Esekr0fM'
+//   };
+//   // Create an S3 client instance
+//   const s3Client = new S3Client({
+//     endpoint: "https://w6s4.sg.idrivee2-50.com",
+//     region: "singapore",
+//     credentials
+//   });
+//   const key = req.query.key;
+//   const command = new GetObjectCommand({
+//     Bucket: "cloudstoragesgp1idrvep0clds3",
+//     Key: key,
+//     ResponseContentDisposition: 'inline; filename="ForBiggerJoyrides.mp4"'
+//   });
+
+//   const url = await getSignedUrl(s3Client, command, { expiresIn: 3600*24 });
+
+//   res.send(url);
+// });
 
 // Handle file uploads
 // Handle file uploads
