@@ -40,13 +40,14 @@ async function upload_file(){
 async function getPresignedUrl() {
   const s3Client = new S3Client({
     endpoint: "https://w6s4.sg.idrivee2-50.com",
-    region: "global",
+    region: "singapore",
     credentials
   });
 
   const command = new GetObjectCommand({
     Bucket: "cloudstoragesgp1idrvep0clds3",
-    Key: "bunny.mp4",
+    Key: "x.mp4",
+    ACL: 'public-read',
     ResponseContentDisposition: 'inline; filename="ForBiggerJoyrides.mp4"'
   });
 
